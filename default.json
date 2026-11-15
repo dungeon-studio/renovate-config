@@ -1,0 +1,56 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate policy for Dungeon Studio's repositories.",
+  "extends": [
+    "config:best-practices",
+    "security:openssf-scorecard",
+    "customManagers:githubActionsVersions"
+  ],
+  "timezone": "Europe/London",
+  "reviewers": ["alunduil"],
+  "labels": ["dependencies"],
+  "gitIgnoredAuthors": [
+    "346253781+dungeon-studio-hook-fix[bot]@users.noreply.github.com"
+  ],
+  "pre-commit": {
+    "enabled": true
+  },
+  "minimumReleaseAge": "3 days",
+  "minimumReleaseAgeBehaviour": "timestamp-optional",
+  "ignoreTests": true,
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "description": "These update types carry no release timestamp, so the release-age wait would hold them forever without opening a PR",
+      "matchUpdateTypes": [
+        "pin",
+        "pinDigest",
+        "digest",
+        "lockFileMaintenance",
+        "lockfileUpdate",
+        "rollback",
+        "bump",
+        "replacement"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "docker:pinDigests leaves dev container images unpinned because the dev container CLI rejects tag@digest on features",
+      "matchManagers": ["devcontainer"],
+      "matchDepTypes": ["image"],
+      "pinDigests": true
+    },
+    {
+      "description": "mise lock writes these files and mise.lock records their digest, so only the mise manager can change them without breaking locked installs",
+      "matchManagers": ["pep621"],
+      "matchFileNames": [".mise/locks/**"],
+      "enabled": false
+    },
+    {
+      "description": "A release job runs these beside the credential it publishes with. Runner images are exempt because GitHub also issues that job's OIDC token.",
+      "matchFileNames": [".github/workflows/release.yml", ".github/actions/**"],
+      "matchDatasources": ["!github-runners"],
+      "automerge": false
+    }
+  ]
+}
