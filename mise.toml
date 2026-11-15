@@ -8,3 +8,4 @@ lockfile_platforms = ["linux-x64"]
 [tools]
 node = "26.13.0"
 prek = "0.5.10"
+vale = "3.27.0"

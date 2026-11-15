@@ -25,17 +25,21 @@ repos:
       - id: markdownlint-cli2
         args: [--fix]
 
-  # The first hook installs the Packages .vale.ini declares; without it the
+  # Vale comes from the mise pin: upstream's hook builds it from Go source.
+  # The sync hook installs the Packages .vale.ini declares; without it the
   # lint loads no rules and passes silently.
-  - repo: https://github.com/vale-cli/vale
-    rev: v3.27.0
+  - repo: local
     hooks:
-      - id: vale
+      - id: vale-sync
         name: vale sync
-        args: [sync]
+        entry: vale sync
+        language: system
+        types: [markdown]
         pass_filenames: false
       - id: vale
-        args: [--output=line, --minAlertLevel=error]
+        name: vale
+        entry: vale --output=line --minAlertLevel=error
+        language: system
         types: [markdown]
 
   - repo: https://github.com/adrienverge/yamllint
