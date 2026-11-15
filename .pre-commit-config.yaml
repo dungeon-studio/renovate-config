@@ -2,11 +2,6 @@
 # SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
 # SPDX-License-Identifier: MIT
 
-# Use the Node that mise.toml pins. pre-commit's detection skips mise's
-# shims/ directory and would build its own Node through nodeenv.
-default_language_version:
-  node: system
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
