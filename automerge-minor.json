@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Opt-in automerge for non-breaking minor, patch, pin, digest, and lock file updates.",
+  "lockFileMaintenance": { "automerge": true },
+  "minor": { "automerge": true },
+  "patch": { "automerge": true },
+  "pin": { "automerge": true },
+  "digest": { "automerge": true },
+  "packageRules": [
+    {
+      "description": "A breaking change, such as a semver 0.x minor, can pass every check and still break behaviour no test covers",
+      "matchIsBreaking": true,
+      "automerge": false
+    },
+    {
+      "description": "Versioning schemes without a breaking-change rule, such as loose or regex, mark only majors as breaking, so hold their 0.x updates here",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "/^v?0\\./",
+      "automerge": false
+    }
+  ]
+}
