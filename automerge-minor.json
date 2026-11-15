@@ -8,12 +8,12 @@
   "lockFileMaintenance": { "automerge": true },
   "packageRules": [
     {
-      "description": "A breaking change, such as a semver 0.x minor, can pass every check and still break behaviour no test covers",
+      "description": "A breaking change can pass every check and still break behaviour no test covers",
       "matchIsBreaking": true,
       "automerge": false
     },
     {
-      "description": "Versioning schemes without a breaking-change rule, such as loose or regex, mark only majors as breaking, so their 0.x updates need their own hold",
+      "description": "A 0.x minor or patch can break, but schemes such as loose or regex mark only majors as breaking",
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "/^v?0\\./",
       "automerge": false

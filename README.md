@@ -36,17 +36,15 @@ it beside the default preset:
 ```
 
 Extend it only when the branch ruleset lets Renovate merge and its
-required checks catch a broken dependency update. The default preset
-sets `ignoreTests`, so Renovate leaves the wait for checks to the
-ruleset. Without required checks, an update merges untested.
+required checks catch a broken dependency update. Renovate merges once
+required checks pass, whatever other checks report, so without
+required checks an update merges untested.
 
 These updates still wait for review:
 
 - Majors.
-- Updates the versioning scheme marks as breaking, such as a semver
-  0.x minor.
-- Minor and patch updates from a 0.x version under any versioning
-  scheme.
+- Updates from a 0.x version.
+- Other updates the versioning scheme marks as breaking.
 - Updates in `.github/workflows/release.yml` and `.github/actions/**`,
   other than runner images, because a release job runs them beside its
   publishing credential.
