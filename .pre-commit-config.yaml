@@ -25,9 +25,8 @@ repos:
       - id: markdownlint-cli2
         args: [--fix]
 
-  # Vale comes from the mise pin: upstream's hook builds it from Go source.
-  # The sync hook installs the Packages .vale.ini declares; without it the
-  # lint loads no rules and passes silently.
+  # vale sync installs the Packages .vale.ini declares; without it the lint
+  # loads no rules and passes silently.
   - repo: local
     hooks:
       - id: vale-sync
@@ -71,8 +70,7 @@ repos:
 
   - repo: local
     hooks:
-      # The PyPI wheel is a prebuilt binary, so no Go build. shellcheck on
-      # PATH lets it lint `run:` scripts too.
+      # shellcheck on PATH lets jactionlint lint `run:` scripts too.
       - id: jactionlint
         name: jactionlint
         entry: jactionlint
