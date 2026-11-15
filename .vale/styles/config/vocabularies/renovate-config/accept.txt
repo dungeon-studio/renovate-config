@@ -4,5 +4,6 @@
 # Vale.Terms vocabulary: one regex per line. A term whose canonical form
 # carries a capital is a bare literal; an all-lowercase term takes (?i).
 
+(?i)automerg(e|es|ing)
 (?i)preset's
 Renovate
