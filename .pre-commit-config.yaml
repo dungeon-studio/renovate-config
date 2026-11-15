@@ -51,6 +51,14 @@ repos:
       - id: yamllint
         args: [--strict]
 
+  - repo: https://github.com/tombi-toml/tombi-pre-commit
+    rev: v1.11.2
+    hooks:
+      - id: tombi-format
+        args: [--offline]
+      - id: tombi-lint
+        args: [--offline]
+
   - repo: https://github.com/fsfe/reuse-tool
     rev: v6.3.0
     hooks:
