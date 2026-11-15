@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
+# SPDX-License-Identifier: MIT
+---
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Never cancel a push to a long-lived branch, so every commit on it keeps a
+  # result of its own.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  hooks:
+    name: Run pre-commit hooks
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up hook tools
+        uses: jdx/mise-action@f5be966e4a917d54244728e6a5fdcd1d93a35e6c # v5.2.6
+
+      - name: Cache hook environments
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/prek
+          key: prek-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run hooks
+        env:
+          # On push, the checkout is on develop or main, which
+          # no-commit-to-branch rejects.
+          SKIP: no-commit-to-branch
+        run: prek run --all-files --show-diff-on-failure --color=always

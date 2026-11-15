@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
+# SPDX-License-Identifier: MIT
+
+# Vale packages that `vale sync` downloads; only the vocabulary is ours.
+.vale/styles/*
+!.vale/styles/config/
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
+# SPDX-License-Identifier: MIT
+
+version = 1
+SPDX-PackageName = "renovate-config"
+SPDX-PackageSupplier = "Alex Brandt <alunduil@gmail.com>"
+SPDX-PackageDownloadLocation = "https://github.com/dungeon-studio/renovate-config"
+
+# Files that cannot carry an inline header:
+# - JSON: no comment syntax.
+# - mise.lock: mise lock overwrites inline headers.
+[[annotations]]
+path = ["**.json", "mise.lock"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Alex Brandt <alunduil@gmail.com>"
+SPDX-License-Identifier = "MIT"

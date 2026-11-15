@@ -1,0 +1,95 @@
+---
+# SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
+# SPDX-License-Identifier: MIT
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: no-commit-to-branch
+        args: [--branch, develop, --branch, main]
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.24.1
+    hooks:
+      - id: markdownlint-cli2
+        args: [--fix]
+
+  # vale sync installs the Packages .vale.ini declares; without it the lint
+  # loads no rules and passes silently.
+  - repo: local
+    hooks:
+      - id: vale-sync
+        name: vale sync
+        entry: vale sync
+        language: system
+        types: [markdown]
+        pass_filenames: false
+      - id: vale
+        name: vale
+        entry: vale --output=line --minAlertLevel=error
+        language: system
+        types: [markdown]
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args: [--strict]
+
+  - repo: https://github.com/tombi-toml/tombi-pre-commit
+    rev: v1.11.2
+    hooks:
+      - id: tombi-format
+        args: [--offline]
+      - id: tombi-lint
+        args: [--offline]
+
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v6.3.0
+    hooks:
+      - id: reuse
+        always_run: true
+
+  # Online audits need a token, so only the offline ones run here.
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.32.0
+    hooks:
+      - id: zizmor
+        args: [--no-progress, --offline]
+
+  - repo: local
+    hooks:
+      # shellcheck on PATH lets jactionlint lint `run:` scripts too.
+      - id: jactionlint
+        name: jactionlint
+        entry: jactionlint
+        language: python
+        additional_dependencies: [jactionlint==2.6.0, shellcheck-py==0.11.0.1]
+        files: ^\.github/workflows/
+        pass_filenames: false
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+
+  # The default `files` pattern matches only Renovate's own config filenames;
+  # presets are any JSON file at the root. --no-global validates each file as
+  # repository config, not self-hosted global config.
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 44.235.1
+    hooks:
+      - id: renovate-config-validator
+        files: ^[^/]+\.json$
+        args: [--strict, --no-global]
