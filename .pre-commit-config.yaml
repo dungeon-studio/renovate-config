@@ -2,9 +2,8 @@
 # SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
 # SPDX-License-Identifier: MIT
 
-# pre-commit skips executables under a shims/ directory when detecting a
-# system Node, so without this it builds its own through nodeenv instead of
-# using the one mise.toml pins.
+# Use the Node that mise.toml pins. pre-commit's detection skips mise's
+# shims/ directory and would build its own Node through nodeenv.
 default_language_version:
   node: system
 
@@ -67,10 +66,8 @@ repos:
 
   - repo: local
     hooks:
-      # The PyPI wheel ships a prebuilt binary, where upstream's hooks build
-      # from Go source. jactionlint checks `run:` scripts only when
-      # shellcheck is on PATH. Run without arguments, it finds the files it
-      # lints.
+      # The PyPI wheel is a prebuilt binary, so no Go build. shellcheck on
+      # PATH lets it lint `run:` scripts too.
       - id: jactionlint
         name: jactionlint
         entry: jactionlint
@@ -84,9 +81,9 @@ repos:
     hooks:
       - id: detect-secrets
 
-  # The default `files` pattern skips presets, which are every JSON file at
-  # the root except renovate.json. Without --no-global, the validator checks
-  # a named file as self-hosted global config, not repository config.
+  # The default `files` pattern matches only Renovate's own config filenames;
+  # presets are any JSON file at the root. --no-global validates each file as
+  # repository config, not self-hosted global config.
   - repo: https://github.com/renovatebot/pre-commit-hooks
     rev: 44.235.1
     hooks:

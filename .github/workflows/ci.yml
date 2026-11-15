@@ -37,8 +37,8 @@ jobs:
       - name: Run hooks
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
         env:
-          # A push-event checkout is attached to the very branch
-          # no-commit-to-branch guards, so the hook would fail every merge.
+          # On push, the checkout is on develop or main, which
+          # no-commit-to-branch rejects.
           SKIP: no-commit-to-branch
         with:
           extra_args: --all-files

@@ -5,11 +5,8 @@
 .vale/styles/*
 !.vale/styles/config/
 
-# OS
 .DS_Store
 Thumbs.db
-
-# IDE
 .idea/
 .vscode/
 *.swp
