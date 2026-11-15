@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com>
+# SPDX-License-Identifier: MIT
+#
+# Vale.Terms vocabulary: one regex per line. A term whose canonical form
+# carries a capital is a bare literal; an all-lowercase term takes (?i).
+
+Renovate
+(?i)pre-commit
+(?i)repos?
