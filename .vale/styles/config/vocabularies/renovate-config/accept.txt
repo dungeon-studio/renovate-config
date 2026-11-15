@@ -5,5 +5,3 @@
 # carries a capital is a bare literal; an all-lowercase term takes (?i).
 
 Renovate
-(?i)pre-commit
-(?i)repos?
