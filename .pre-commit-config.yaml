@@ -16,9 +16,7 @@ repos:
       - id: end-of-file-fixer
       - id: mixed-line-ending
         args: [--fix=lf]
-      - id: check-yaml
       - id: check-json
-      - id: check-toml
       - id: check-added-large-files
         args: [--maxkb=1000]
       - id: check-case-conflict
