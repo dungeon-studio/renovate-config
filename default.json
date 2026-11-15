@@ -35,7 +35,7 @@
       "minimumReleaseAge": null
     },
     {
-      "description": "Pin dev container images, which docker:pinDigests leaves unpinned because the dev container CLI rejects tag@digest on features",
+      "description": "docker:pinDigests leaves dev container images unpinned because the dev container CLI rejects tag@digest on features",
       "matchManagers": ["devcontainer"],
       "matchDepTypes": ["image"],
       "pinDigests": true
