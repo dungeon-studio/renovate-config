@@ -3,31 +3,29 @@
 
 # Agent instructions for `renovate-config`
 
-Repository rules for every coding agent. Claude Code reads
-[`CLAUDE.md`](CLAUDE.md), which imports this file. Usage and override
-semantics for consumers live in [`README.md`](README.md).
+Document behaviour that consuming repositories see in
+[`README.md`](README.md).
 
 ## Presets
 
-- Every JSON file at the root is a preset that consuming repositories
-  extend as `github>dungeon-studio/renovate-config:<name>`; `default.json`
-  is the bare `github>dungeon-studio/renovate-config`. Renaming or removing
-  one breaks every repository extending it.
-- Renovate resolves presets from `develop`, so a preset change reaches
-  consumers, this repository included, only after it merges.
-- Keep the update-type blocks in `automerge-minor.json` (`"minor": {
-  "automerge": true }` and siblings) outside `packageRules`. Renovate
-  applies `packageRules` after update-type config, and that order keeps the
-  release-workflow hold in `default.json` in force.
-- `gitIgnoredAuthors` takes the bot's user ID, the `id` that
-  `gh api users/<bot>[bot]` returns, not its GitHub App ID.
-- `default.json` started as a copy of the `default.json` in
-  `alunduil/renovate-config` and doesn't extend it. Port upstream
-  changes by hand; some `description` texts differ on purpose.
+- Each root JSON file is a preset. Other repositories extend it as
+  `github>dungeon-studio/renovate-config:<name>`, or without the suffix
+  for `default.json`. Renaming or removing one breaks every repository
+  that extends it.
+- Renovate reads presets from `develop`. Consumers, including this
+  repository, see a preset change only after it merges.
+- In `automerge-minor.json`, set automerge on the top-level update-type
+  objects, outside `packageRules`. Renovate applies `packageRules` last,
+  so the release-workflow hold in `default.json` still wins.
+- `gitIgnoredAuthors` takes the bot's user ID from
+  `gh api users/<bot>[bot]`.
+- `default.json` mirrors the `default.json` in `alunduil/renovate-config`
+  without extending it. Port upstream changes by hand, keeping the
+  `description` texts that differ on purpose.
 
 ## Hooks and CI
 
-- Run hooks with `prek run --all-files`. The Vale hooks are `system`
-  hooks and need the Vale that `mise.toml` pins on `PATH`.
-- An action a workflow uses must be on the organization's Actions
-  allowlist, which dungeon-studio/dungeon-studio-infrastructure manages.
+- Run hooks with `prek run --all-files`, with the `mise.toml` tools
+  active. The Vale hooks run whichever Vale is on `PATH`.
+- Use only actions on the organization's Actions allowlist, which
+  dungeon-studio/dungeon-studio-infrastructure manages.
