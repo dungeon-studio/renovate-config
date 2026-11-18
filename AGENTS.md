@@ -15,29 +15,19 @@ semantics for consumers live in [`README.md`](README.md).
   one breaks every repository extending it.
 - Renovate resolves presets from `develop`, so a preset change reaches
   consumers, this repository included, only after it merges.
-- JSON carries no comments. Put each rule's reason in its `description`.
 - Keep the update-type blocks in `automerge-minor.json` (`"minor": {
   "automerge": true }` and siblings) outside `packageRules`. Renovate
   applies `packageRules` after update-type config, and that order keeps the
   release-workflow hold in `default.json` in force.
-- `gitIgnoredAuthors` takes the bot's user ID from
-  `users/<bot>[bot]`, not its GitHub App ID.
+- `gitIgnoredAuthors` takes the bot's user ID, the `id` that
+  `gh api users/<bot>[bot]` returns, not its GitHub App ID.
 - `default.json` started as a copy of the `default.json` in
   `alunduil/renovate-config` and doesn't extend it. Port upstream
   changes by hand; some `description` texts differ on purpose.
 
-## CI and branches
+## Hooks and CI
 
-- Branch rulesets in dungeon-studio/dungeon-studio-infrastructure require
-  the jobs `Run pre-commit hooks` and `Check Git flow source branch` by
-  name. Keep those job names.
+- Run hooks with `prek run --all-files`. The Vale hooks are `system`
+  hooks and need the Vale that `mise.toml` pins on `PATH`.
 - An action a workflow uses must be on the organization's Actions
   allowlist, which dungeon-studio/dungeon-studio-infrastructure manages.
-- Target pull requests at `develop`. Only `release/*` and `hotfix/*`
-  merge into `main`.
-
-## Hooks
-
-Run hooks with `prek run --all-files`. mise pins `prek`, Node, and Vale in
-`mise.toml`; the Vale hooks are `system` hooks and need that Vale on
-`PATH`.
