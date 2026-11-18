@@ -1,7 +1,7 @@
 <!-- SPDX-FileCopyrightText: 2026 Alex Brandt <alunduil@gmail.com> -->
 <!-- SPDX-License-Identifier: MIT -->
 
-# Agent instructions for renovate-config
+# Agent instructions for `renovate-config`
 
 Repository rules for every coding agent. Claude Code reads
 [`CLAUDE.md`](CLAUDE.md), which imports this file. Usage and override
@@ -22,9 +22,9 @@ semantics for consumers live in [`README.md`](README.md).
   release-workflow hold in `default.json` in force.
 - `gitIgnoredAuthors` takes the bot's user ID from
   `users/<bot>[bot]`, not its GitHub App ID.
-- `default.json` started as a copy of alunduil/renovate-config's
-  `default.json` and doesn't extend it. Port upstream changes by hand; some
-  `description` texts differ on purpose.
+- `default.json` started as a copy of the `default.json` in
+  `alunduil/renovate-config` and doesn't extend it. Port upstream
+  changes by hand; some `description` texts differ on purpose.
 
 ## CI and branches
 
@@ -38,6 +38,6 @@ semantics for consumers live in [`README.md`](README.md).
 
 ## Hooks
 
-Run hooks with `prek run --all-files`. mise pins prek, Node, and Vale in
+Run hooks with `prek run --all-files`. mise pins `prek`, Node, and Vale in
 `mise.toml`; the Vale hooks are `system` hooks and need that Vale on
 `PATH`.
